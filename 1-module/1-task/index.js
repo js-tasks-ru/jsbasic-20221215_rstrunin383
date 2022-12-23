@@ -14,3 +14,6 @@ function factorial(n) {
 }
 
 console.log(factorial(0));
+console.log(factorial(2));
+debugger;
+console.log('тест');
