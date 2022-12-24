@@ -1,4 +1,4 @@
 function ucFirst(str) {
-  let tmp = str[0].toUpperCase() + str.substr(1, str.length - 1);
+  let tmp = str === '' ? '' : str[0].toUpperCase() + str.substr(1, str.length - 1);
   return tmp;
 }
