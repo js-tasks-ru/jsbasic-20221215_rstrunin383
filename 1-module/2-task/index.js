@@ -10,7 +10,14 @@ function print(text) {
  * чтобы функция sayHello работала корректно
  */
 function isValid(name) {
-  // ваш код...
+  let result = false;
+  
+  /* Нужно ли здесь явно преобразовывать тип Boolean(name) или не стоит? */
+  if (Boolean(name) && !~name.indexOf(' ') && name.length >= 4) { 
+    result = true;
+  }
+
+  return result;
 }
 
 function sayHello() {

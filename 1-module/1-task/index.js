@@ -12,5 +12,3 @@ function factorial(n) {
 
   return n;
 }
-
-console.log(factorial(0));
