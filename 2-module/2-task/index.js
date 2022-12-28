@@ -1,3 +1,9 @@
 function isEmpty(obj) {
-  // ваш код...
+  let propSum = 0;
+
+  for (let prop in obj) {
+    propSum++;
+  }
+
+  return !Boolean(propSum);
 }
