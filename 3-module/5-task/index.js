@@ -8,10 +8,8 @@ function getMinMax(str) {
 
   let numbers = arrWithoutWords.map(item => parseFloat(item, 10));
 
-  let compared = numbers.sort((a, b) => {
-    return a - b;
-  });
-
-  return {'min' : compared[0], 
-          'max' : compared[compared.length - 1]};
+  return { 
+    min : Math.min(...numbers), 
+    max : Math.max(...numbers)
+  };
 }
