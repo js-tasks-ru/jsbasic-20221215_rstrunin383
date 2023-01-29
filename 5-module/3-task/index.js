@@ -1,23 +1,27 @@
 function initCarousel() {
+  let carousel = document.querySelector('.carousel');
+  let carouselInner = document.querySelector('.carousel__inner');
+  const slideWidth = carouselInner.offsetWidth;
+  let currentOffset = 0;
+
   let btnMoveRight = document.querySelector('.carousel__arrow.carousel__arrow_right');
   let btnMoveLeft = document.querySelector('.carousel__arrow.carousel__arrow_left');
   btnMoveLeft.style.display = 'none';
 
-  let carouselInner = document.querySelector('.carousel__inner');
-  const slideWidth = carouselInner.offsetWidth;
+  carousel.addEventListener('click', function (event) {
+    if (!event.target.closest('div').classList.contains('carousel__arrow')) return;
 
-  let currentOffset = 0;
+    if (event.target.closest('div').classList.contains('carousel__arrow_right')) {
+      currentOffset += slideWidth;
+      carouselInner.style.transform = 'translateX(-' + currentOffset + 'px)';
+      arrowDisplayManager();
+    }
 
-  btnMoveRight.addEventListener('click', function() {
-    currentOffset += slideWidth;
-    carouselInner.style.transform = 'translateX(-' + currentOffset + 'px)';
-    arrowDisplayManager();
-  });
-
-  btnMoveLeft.addEventListener('click', function() {
-    currentOffset -= slideWidth;
-    carouselInner.style.transform = 'translateX(-' + currentOffset + 'px)';
-    arrowDisplayManager();
+    if (event.target.closest('div').classList.contains('carousel__arrow_left')) {
+      currentOffset -= slideWidth;
+      carouselInner.style.transform = 'translateX(-' + currentOffset + 'px)';
+      arrowDisplayManager();
+    }
   });
 
   function arrowDisplayManager() {
