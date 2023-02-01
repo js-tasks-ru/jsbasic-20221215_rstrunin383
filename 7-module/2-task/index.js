@@ -4,7 +4,15 @@ export default class Modal {
   constructor() {
     this.render();
 
-    this.elem.addEventListener('click', (event) => this.onClick(event));
+    this.elem.addEventListener('click', ev => {
+      if (ev.target.closest('.modal__close')) this.close();
+    });
+
+    this.escListener = ev => {
+      if (ev.code === 'Escape') this.close();
+    }
+
+    window.addEventListener('keydown', this.escListener);
   }
 
   render() {
@@ -24,48 +32,32 @@ export default class Modal {
     `);
   }
 
-  sub(ref) {
-    return this.elem.querySelector(`.modal__${ref}`);
+  selectModal(postfix) {
+    return this.elem.querySelector(`.modal__${postfix}`);
+  }
+
+  setTitle(title) {
+    this.selectModal('title').textContent = title;
+  }
+
+  setBody(node) {
+    let body = this.selectModal('body');
+    body.innerHTML = '';
+    body.append(node);
   }
 
   open() {
     document.body.append(this.elem);
     document.body.classList.add('is-modal-open');
-
-    this._keydownEventListener = (event) => this.onDocumentKeyDown(event);
-    document.addEventListener('keydown', this._keydownEventListener);
-
-    if (this.elem.querySelector('[autofocus]')) {
-      this.elem.querySelector('[autofocus]').focus();
-    }
   }
 
-  onClick(event) {
-    if (event.target.closest('.modal__close')) {
-      event.preventDefault();
-      this.close();
-    }
-  }
-
-  onDocumentKeyDown(event) {
-    if (event.code === 'Escape') {
-      event.preventDefault();
-      this.close();
-    }
-  }
-
-  setTitle(title) {
-    this.sub('title').textContent = title;
-  }
-
-  setBody(node) {
-    this.sub('body').innerHTML = '';
-    this.sub('body').append(node);
+  escKeydown(ev) {
+    if (ev.code === 'Escape') this.close();
   }
 
   close() {
-    document.removeEventListener('keydown', this._keydownEventListener);
     document.body.classList.remove('is-modal-open');
     this.elem.remove();
+    window.removeEventListener('keydown', this.escListener, false);
   }
 }
